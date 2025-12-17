@@ -1,6 +1,6 @@
-# TikTok Creator Search
+# YouTube Creator Search
 
-A neo-brutalist web app to find TikTok creators by keyword/niche and follower count range, with CSV export functionality.
+A neo-brutalist web app to find YouTube creators by keyword/niche and follower count range, with CSV export functionality.
 
 ## Features
 
