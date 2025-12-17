@@ -151,9 +151,6 @@ export default function Home() {
                   <th>Link</th>
                   <th>Subs</th>
                   <th>Last Video</th>
-                  <th>IG</th>
-                  <th>TikTok</th>
-                  <th>LinkedIn</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,21 +168,6 @@ export default function Home() {
                         <a href={creator.lastVideo} target="_blank" rel="noopener noreferrer">
                           {creator.lastVideoDate}
                         </a>
-                      ) : '-'}
-                    </td>
-                    <td>
-                      {creator.instagram ? (
-                        <a href={creator.instagram} target="_blank" rel="noopener noreferrer">✓</a>
-                      ) : '-'}
-                    </td>
-                    <td>
-                      {creator.tiktok ? (
-                        <a href={creator.tiktok} target="_blank" rel="noopener noreferrer">✓</a>
-                      ) : '-'}
-                    </td>
-                    <td>
-                      {creator.linkedin ? (
-                        <a href={creator.linkedin} target="_blank" rel="noopener noreferrer">✓</a>
                       ) : '-'}
                     </td>
                   </tr>
