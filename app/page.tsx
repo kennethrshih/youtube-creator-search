@@ -19,6 +19,7 @@ export default function Home() {
   const [keyword, setKeyword] = useState('')
   const [minFollowers, setMinFollowers] = useState('')
   const [maxFollowers, setMaxFollowers] = useState('')
+  const [uploadedAfter, setUploadedAfter] = useState('')
   const [results, setResults] = useState<Creator[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -39,6 +40,7 @@ export default function Home() {
         keyword: keyword.trim(),
         ...(minFollowers && { minFollowers }),
         ...(maxFollowers && { maxFollowers }),
+        ...(uploadedAfter && { uploadedAfter }),
       })
 
       const res = await fetch(`/api/search?${params}`)
@@ -111,6 +113,15 @@ export default function Home() {
                 onChange={(e) => setMaxFollowers(e.target.value)}
               />
             </div>
+          </div>
+
+          <div className="form-group">
+            <label>Last Video Upload Date (optional)</label>
+            <input
+              type="date"
+              value={uploadedAfter}
+              onChange={(e) => setUploadedAfter(e.target.value)}
+            />
           </div>
 
           <button type="submit" className="btn-primary" disabled={loading}>

@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
   const apiKey = process.env.YOUTUBE_API_KEY
   const minFollowers = parseInt(searchParams.get('minFollowers') || '0')
   const maxFollowers = parseInt(searchParams.get('maxFollowers') || '999999999')
+  const uploadedAfter = searchParams.get('uploadedAfter') || ''
 
   if (!keyword) {
     return NextResponse.json({ error: 'Keyword is required' }, { status: 400 })
@@ -71,26 +72,11 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      // Extract email and social links from channel description
-      const description = channel.snippet.description || ''
-      
-      const emailMatch = description.match(/[\w.-]+@[\w.-]+\.\w+/)
-      const email = emailMatch ? emailMatch[0] : ''
-      
-      const instagramMatch = description.match(/(?:instagram\.com\/|@)([a-zA-Z0-9_.]+)/i)
-      const instagram = instagramMatch ? `https://instagram.com/${instagramMatch[1]}` : ''
-      
-      const tiktokMatch = description.match(/tiktok\.com\/@?([a-zA-Z0-9_.]+)/i)
-      const tiktok = tiktokMatch ? `https://tiktok.com/@${tiktokMatch[1]}` : ''
-      
-      const linkedinMatch = description.match(/linkedin\.com\/in\/([a-zA-Z0-9_-]+)/i)
-      const linkedin = linkedinMatch ? `https://linkedin.com/in/${linkedinMatch[1]}` : ''
-
-      // Get latest video from uploads playlist
+      // Check upload date filter - we'll get the video first, then filter
+      const uploadsPlaylistId = channel.contentDetails?.relatedPlaylists?.uploads
       let lastVideo = ''
       let lastVideoDate = ''
       
-      const uploadsPlaylistId = channel.contentDetails?.relatedPlaylists?.uploads
       if (uploadsPlaylistId) {
         try {
           const videosUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=1&key=${apiKey}`
@@ -106,6 +92,26 @@ export async function GET(request: NextRequest) {
           // Skip if we can't get videos
         }
       }
+
+      // Filter by upload date if specified
+      if (uploadedAfter && lastVideoDate && lastVideoDate < uploadedAfter) {
+        continue
+      }
+
+      // Extract email and social links from channel description
+      const description = channel.snippet.description || ''
+      
+      const emailMatch = description.match(/[\w.-]+@[\w.-]+\.\w+/)
+      const email = emailMatch ? emailMatch[0] : ''
+      
+      const instagramMatch = description.match(/(?:instagram\.com\/|@)([a-zA-Z0-9_.]+)/i)
+      const instagram = instagramMatch ? `https://instagram.com/${instagramMatch[1]}` : ''
+      
+      const tiktokMatch = description.match(/tiktok\.com\/@?([a-zA-Z0-9_.]+)/i)
+      const tiktok = tiktokMatch ? `https://tiktok.com/@${tiktokMatch[1]}` : ''
+      
+      const linkedinMatch = description.match(/linkedin\.com\/in\/([a-zA-Z0-9_-]+)/i)
+      const linkedin = linkedinMatch ? `https://linkedin.com/in/${linkedinMatch[1]}` : ''
 
       creators.push({
         handle: channel.snippet.title,

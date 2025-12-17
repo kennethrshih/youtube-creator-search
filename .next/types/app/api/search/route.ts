@@ -1,4 +1,4 @@
-// File: /Users/kennethshih/Documents/Programming/tiktok-creator-search/app/api/search/route.ts
+// File: /Users/kennethshih/Documents/Programming/youtube-creator-search/app/api/search/route.ts
 import * as entry from '../../../../../app/api/search/route.js'
 import type { NextRequest } from 'next/server.js'
 
