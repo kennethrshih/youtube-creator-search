@@ -1,13 +1,15 @@
-# YouTube Creator Search
+# 📺 YouTube Creator Search
 
-A neo-brutalist web app to find YouTube creators by keyword/niche and follower count range, with CSV export functionality.
+A web app to discover YouTube creators by keyword/niche and subscriber count range, with contact info extraction and CSV export.
+
+**🚀 Try it live:** [youtube-creator-search.vercel.app](https://youtube-creator-search.vercel.app/)
 
 ## Features
 
-- 🔍 Search creators by keyword/niche
-- 📊 Filter by follower count range
+- 🔍 Search YouTube creators by keyword/niche
+- 📊 Filter by subscriber count range
+- 📧 Extract social links and emails from channel descriptions
 - 📥 Export results to CSV
-- 🎨 Neo-brutalist design
 
 ## Getting Started
 
@@ -15,16 +17,15 @@ A neo-brutalist web app to find YouTube creators by keyword/niche and follower c
 # Install dependencies
 npm install
 
+# Add your YouTube API key to .env.local
+YOUTUBE_API_KEY=your_api_key_here
+
 # Run development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
 
-## Note
+## API
 
-This demo uses simulated data. For production use, integrate with:
-- [TikTok for Developers API](https://developers.tiktok.com/)
-- [Apify TikTok Scraper](https://apify.com/clockworks/tiktok-scraper)
-- [RapidAPI TikTok APIs](https://rapidapi.com/collection/tiktok-apis)
-
+This app uses the [YouTube Data API v3](https://developers.google.com/youtube/v3) to search for channels and retrieve channel details.
